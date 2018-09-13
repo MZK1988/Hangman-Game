@@ -77,12 +77,15 @@
             <hr class="my-4">
             <p>Please Enter Your Letter Below and Click Submit:</p>
             <p class="lead">
-                <input id = "inputTwo"type="text" name="LastName" value="Mouse">
+                <input id = "inputTwo" maxlength="1" type="text" name="LastName" value="Mouse">
                 <a id="submitTwo" class="btn btn-primary btn-lg" href="#" role="button">Submit</a>
             <p>Letters Guessed:</p>
             <ul id= "listOne">
                
             </ul>
+            <p id = "answer">
+Your guess goes here
+            </p>
         </div>
     </div>
     
@@ -114,21 +117,36 @@
         var guessArray = ['bed', 'hat', 'city', 'country', 
         'state','territory', 'forrest', 'jungle','wood', 'dessert', 'frog', 'leopard', 'cheetah','monkey', 'cat','dog', 'paper', 'atom', 'gold', 'silver'];
 
-
-       
+        //The computer randomly grabs one of the words from the guessArray 
         var guess = guessArray[Math.floor(Math.random() * guessArray.length)];
-        //
+        console.log(guess); //take this out in production!
+        var blanks = [];
+        for(var i=0; i < guess.length; i++){
+            blanks.push("_");
+        }
+
+        $("#answer").text(blanks);
+        //This is the array that fills with underscores depending on th e length of the word that that computer guesses
         var answerArray = [];
-        //variable that keeps count of guests
+        //variable that keeps count of guesses
         var guessesLeft = 13;
         //variable that controls if player can continue based on whether he/she has entered a name
         var playerCount = 0;
 
+        var string;
+        console.log(guess.length);
+        console.log(guess);
+        console.log(string);
+
         function startUp() {
-            for (var i = 0; i < guessArray.length; i++) {
-            guessArray[i] = "_";
+            for (var i = 0; i < guess.length; i++) {
+            answerArray[i] = "_";
             } 
-        }
+    
+
+            string = answerArray.join(" ");
+            $("#answer").text(string);
+            }
 
         $("#submitOne").on("click", function() {
             var inputOne = $("#inputOne").val();
@@ -145,6 +163,19 @@
                 $("#listOne").append("<li><a>" + inputTwo + "</a></li>");
                 guessesLeft--;
                 $("#guesses").text("Guesses Left: " + guessesLeft);
+
+                //check against guess
+                if(guess.indexOf(inputTwo) > -1){
+                    for(var i=0; i < guess.length; i++){
+                        if(guess[i] === inputTwo){
+                            blanks[i] = inputTwo;
+                        }
+                    }
+                    $("#answer").text(blanks);
+                }
+                //if a letter is there, put it in the right spot
+                $("#inputTwo").val('');
+
             }else {alert("No more guesses left or you forgot to enter Player Name!")};
         });
 
