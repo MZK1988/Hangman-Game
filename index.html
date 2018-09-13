@@ -27,7 +27,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333333;
+    background-color: white;
     }
 
     li {
@@ -44,6 +44,7 @@
 
     li a:hover {
     background-color: #111111;
+    color: white;
     }
     </style>
 </head>
@@ -72,7 +73,7 @@
     <div class = "col-md-6">
         <div class="jumbotron">
             <h1 id="nameOne" class="display-4">"First_Name Last_Name"</h1>
-            <p class="lead">Good luck!</p>
+            <p class="lead">Good luck! <span id="guesses">Guesses Left: 13 </span></p>
             <hr class="my-4">
             <p>Please Enter Your Letter Below and Click Submit:</p>
             <p class="lead">
@@ -108,28 +109,46 @@
         //4.Increment a count to store in var guessCount for every onclick event on input>flayerGuess
         //5.concatenate horizontal list into var playerFinalGuess
         //6.if guessCount >= 7 then pl
-         
-         
         
+        
+        var guessArray = ['bed', 'hat', 'city', 'country', 
+        'state','territory', 'forrest', 'jungle','wood', 'dessert', 'frog', 'leopard', 'cheetah','monkey', 'cat','dog', 'paper', 'atom', 'gold', 'silver'];
+
+
+       
+        var guess = guessArray[Math.floor(Math.random() * guessArray.length)];
+        //
+        var answerArray = [];
+        //variable that keeps count of guests
+        var guessesLeft = 13;
+        //variable that controls if player can continue based on whether he/she has entered a name
+        var playerCount = 0;
+
+        function startUp() {
+            for (var i = 0; i < guessArray.length; i++) {
+            guessArray[i] = "_";
+            } 
+        }
 
         $("#submitOne").on("click", function() {
             var inputOne = $("#inputOne").val();
             $("#nameOne").text(inputOne);
             $("#tableOne").append("<tr><td>" + inputOne + "</tr></td>");
-
-
-
+            playerCount++;
+            console.log(playerCount);
 
         });
+
         $("#submitTwo").on("click", function() {
-            var inputTwo = $("#inputTwo").val();
-            $("#listOne").append("<li><a>" + inputTwo + "</a></li>");
-
-
-
-
+            if (guessesLeft >= 1 && playerCount > 0) {
+                var inputTwo = $("#inputTwo").val();
+                $("#listOne").append("<li><a>" + inputTwo + "</a></li>");
+                guessesLeft--;
+                $("#guesses").text("Guesses Left: " + guessesLeft);
+            }else {alert("No more guesses left or you forgot to enter Player Name!")};
         });
-        
+
+
         
         });
     </script>        
