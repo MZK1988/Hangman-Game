@@ -138,15 +138,6 @@ Your guess goes here
         console.log(guess);
         console.log(string);
 
-        function startUp() {
-            for (var i = 0; i < guess.length; i++) {
-            answerArray[i] = "_";
-            } 
-    
-
-            string = answerArray.join(" ");
-            $("#answer").text(string);
-            }
 
         $("#submitOne").on("click", function() {
             var inputOne = $("#inputOne").val();
@@ -165,7 +156,10 @@ Your guess goes here
                 $("#guesses").text("Guesses Left: " + guessesLeft);
 
                 //check against guess
+                //inputTwo = single letter guesses into second input field
+                //guess.indexof(inputTwo)= guess is a word of the array that the computer randomly chooses; guess.indexof(inputTwo) assumes first letter of word is zero ex)if user guess h and computer guess is word hello, then guess.indexof(h|inputTwo) returns the array number of the letter in the word hello, which is 0
                 if(guess.indexOf(inputTwo) > -1){
+                    console.log(guess.indexOf(inputTwo));
                     for(var i=0; i < guess.length; i++){
                         if(guess[i] === inputTwo){
                             blanks[i] = inputTwo;
